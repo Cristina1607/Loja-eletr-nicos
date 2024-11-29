@@ -1,0 +1,71 @@
+CREATE DATABASE IF NOT EXISTS LojadeEletronicos;
+USE LojadeEletronicos;
+
+CREATE TABLE IF NOT EXISTS Produto (
+ID_Produto INT AUTO_INCREMENT PRIMARY KEY,
+Nome VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Produto (ID_Produto, Nome)
+VALUES
+(1,  'Celular'),
+(2,  'Computador'),
+(3,  'Relogio');
+
+CREATE TABLE IF NOT EXISTS Preco (
+ID_Preco INT AUTO_INCREMENT PRIMARY KEY,
+Nome VARCHAR(100) NOT NULL,
+Preco DECIMAL(10, 2) NOT NULL,
+Estoque VARCHAR(100)
+);
+
+INSERT INTO Preco (ID_Preco, Nome, Preco, Estoque)
+VALUES
+(1, 'Sansung', '1000', '70'),
+(2, 'Xiaomi', '1200', '70'),
+(3, 'Iphone', '1500', '70');
+
+CREATE TABLE IF NOT EXISTS Fornecedor (
+ID_Fornecedor INT AUTO_INCREMENT PRIMARY KEY,
+Nome VARCHAR(100) NOT NULL,
+Contato VARCHAR(15)
+);
+
+INSERT INTO Fornecedor (ID_Fornecedor, Nome, Contato)
+VALUES
+(1, 'Avnet', '123456789'),
+(2, 'Disel', '134567890'),
+(3, 'Future', '145678901');
+
+CREATE TABLE IF NOT EXISTS Compra (
+ID_Compra INT AUTO_INCREMENT PRIMARY KEY,
+ID_Fornecedor INT,
+FOREIGN KEY (ID_Fornecedor) REFERENCES Fornecedor(ID_Fornecedor)
+ON DELETE SET NULL ON UPDATE CASCADE,
+Data_Compra DATETIME
+);
+
+INSERT INTO Compra (ID_Compra, Data_Compra)
+VALUES
+(1, '2024/11/11'),
+(2, '2024/11/12'),
+(3, '2024/11/13');
+
+CREATE TABLE IF NOT EXISTS Item (
+ID_Item INT AUTO_INCREMENT PRIMARY KEY,
+ID_Compra INT,
+FOREIGN KEY (ID_Compra) REFERENCES Compra(ID_Compra)
+ON DELETE SET NULL ON UPDATE CASCADE,
+ID_Produto INT,
+FOREIGN KEY (ID_Produto) REFERENCES Produto(ID_Produto)
+ON DELETE SET NULL ON UPDATE CASCADE,
+Quantidade VARCHAR(50)
+);
+
+INSERT INTO Item (ID_Item, Quantidade)
+VALUES
+(1, '70'),
+(2, '70'),
+(3, '70');
+
+SELECT * FROM Preco;
